@@ -100,6 +100,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+AUTH_USER_MODEL = "users.User"
 
 STATIC_URL = "static/"
 
