@@ -4,7 +4,7 @@ from django.db import models
 class Habit(models.Model):
     """Класс для представления привычки"""
 
-    user = models.ForeignKey("User", on_delete=models.CASCADE)
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
     place = models.CharField(
         max_length=255,
         verbose_name="Место",
