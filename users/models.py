@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 
+from users.managers import UserManager
+
 
 class User(AbstractUser):
     """Класс для представления пользователя"""
