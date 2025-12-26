@@ -5,7 +5,6 @@ from rest_framework.generics import (
     UpdateAPIView,
     DestroyAPIView,
 )
-from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated
 
 from habits.models import Habit
@@ -18,6 +17,7 @@ class HabitCreateAPIView(CreateAPIView):
     """API view для создания привычки"""
 
     serializer_class = HabitSerializer
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -31,9 +31,7 @@ class HabitListAPIView(ListAPIView):
     pagination_class = CustomPagination
 
     def get_queryset(self):
-        user = self.request.user
-        # свои привычки или чужие публичные
-        return Habit.objects.filter(Q(user=user) | Q(is_public=True))
+        return Habit.objects.filter(user=self.request.user)
 
 
 class HabitRetrieveAPIView(RetrieveAPIView):
