@@ -34,6 +34,13 @@ class User(AbstractUser):
         help_text="Введите свой тг ник",
     )
 
+    tg_chat_id = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        verbose_name="Telegram chat ID",
+    )
+
     objects = UserManager()
 
     USERNAME_FIELD = "email"
