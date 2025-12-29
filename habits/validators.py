@@ -3,6 +3,9 @@ from datetime import timedelta
 
 
 def validate_habits(value):
+    if not {"is_pleasant", "reward", "related_habit"} & value.keys():
+        return value
+
     is_pleasant = value.get("is_pleasant")
     related_habit = value.get("related_habit")
     reward = value.get("reward")
