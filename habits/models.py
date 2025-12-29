@@ -37,6 +37,8 @@ class Habit(models.Model):
     )
     reward = models.CharField(
         max_length=255,
+        blank=True,
+        null=True,
         verbose_name="Вознаграждение",
         help_text="Чем пользователь должен себя вознаградить после выполнения",
     )
@@ -45,6 +47,13 @@ class Habit(models.Model):
         blank=True,
         null=True,
     )
+
+    last_run_at = models.DateTimeField(
+        blank=True,
+        null=True,
+        verbose_name="Последнее напоминание"
+    )
+
     is_public = models.BooleanField(default=False)
 
     class Meta:
