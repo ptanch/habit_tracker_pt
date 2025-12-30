@@ -64,8 +64,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
@@ -76,7 +74,6 @@ DATABASES = {
         "PORT": os.getenv("DB_PORT")
     }
 }
-
 
 
 AUTH_PASSWORD_VALIDATORS = [
