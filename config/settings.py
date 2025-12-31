@@ -4,6 +4,7 @@ from datetime import timedelta
 from pathlib import Path
 
 from celery.schedules import crontab
+from corsheaders.defaults import default_headers
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -33,9 +34,11 @@ INSTALLED_APPS = [
     "users",
     "habits",
     "django_celery_beat",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -147,3 +150,12 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": crontab(minute="*"),
     },
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "https://frontend.example.com",
+]
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "authorization",
+]
