@@ -34,6 +34,17 @@ class HabitListAPIView(ListAPIView):
         return Habit.objects.filter(user=self.request.user)
 
 
+class PublicHabitListAPIView(ListAPIView):
+    """API view для получения списка публичных привычек"""
+
+    serializer_class = HabitSerializer
+    permission_classes = [IsAuthenticated]
+    pagination_class = CustomPagination
+
+    def get_queryset(self):
+        return Habit.objects.filter(is_public=True)
+
+
 class HabitRetrieveAPIView(RetrieveAPIView):
     """API view для получения детальной информации о привычке"""
 
