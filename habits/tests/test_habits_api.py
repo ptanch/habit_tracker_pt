@@ -19,6 +19,11 @@ class HabitAPITestCase(APITestCase):
             password="StrongPassword123"
         )
 
+        self.other_user = User.objects.create_user(
+            email="other@example.com",
+            password="StrongPassword123"
+        )
+
         refresh = RefreshToken.for_user(self.user)
         self.client.credentials(
             HTTP_AUTHORIZATION=f"Bearer {refresh.access_token}"
@@ -68,6 +73,37 @@ class HabitAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn("results", response.data)
         self.assertEqual(len(response.data["results"]), 1)
+
+    def test_public_habits_list(self):
+        """
+        Авторизованный пользователь видит только публичные привычки
+        других пользователей
+        """
+        public_habit = Habit.objects.create(
+            user=self.other_user,
+            action="Публичная привычка",
+            time=time(10, 0),
+            execution_time=timedelta(seconds=60),
+            is_pleasant=True,
+            is_public=True,
+        )
+
+        Habit.objects.create(
+            user=self.other_user,
+            action="Приватная привычка",
+            time=time(11, 0),
+            execution_time=timedelta(seconds=60),
+            is_pleasant=True,
+            is_public=False,
+        )
+
+        url = reverse("habits:public_habit_list")
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("results", response.data)
+        self.assertEqual(len(response.data["results"]), 1)
+        self.assertEqual(response.data["results"][0]["id"], public_habit.id)
 
     def test_delete_habit(self):
         """
