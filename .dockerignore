@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Poetry / venv
+.venv/
+venv/
+
+# Env files
+.env
+.env.*
+
+# Git
+.git
+.gitignore
+
+# IDE
+.idea/
+.vscode/
+
+# Tests & coverage
+.coverage
+htmlcov/
+
+# Static & media
+staticfiles/
+media/
