@@ -6,6 +6,8 @@ from drf_yasg import openapi
 from django.contrib import admin
 from django.urls import path, include
 
+from config.views import health_check
+
 schema_view = get_schema_view(
     openapi.Info(
         title="Snippets API",
@@ -31,6 +33,7 @@ urlpatterns = [
     ),
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
     path("admin/", admin.site.urls),
+    path("health/", health_check),
     path("users/", include("users.urls", namespace="users")),
     path("habits/", include("habits.urls", namespace="habits")),
 ]
