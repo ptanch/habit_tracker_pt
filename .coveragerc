@@ -1,0 +1,10 @@
+[run]
+# исключаем тесты, миграции и __init__.py
+omit =
+    */tests/*
+    */migrations/*
+    */__init__.py
+
+# [report]
+# показывать только процент и имена файлов без лишнего
+# show_missing = True

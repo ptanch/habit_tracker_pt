@@ -1,0 +1,20 @@
+from django.contrib.auth import get_user_model
+from rest_framework import serializers
+
+User = get_user_model()
+
+
+class UserSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для представления пользователя
+    Добавлен параметр чтобы пароль не утекал в ответах
+    """
+
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ("id", "email", "password")
+
+    def create(self, validated_data):
+        return User.objects.create_user(**validated_data)
