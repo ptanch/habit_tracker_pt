@@ -1,0 +1,26 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - feature/deploy_actions
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: feature
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /opt/habit_tracker
+            git fetch
+            git checkout feature/deploy_actions
+            git pull origin feature/deploy_actions
+            docker compose down
+            docker compose up -d --build
