@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   db:
     image: postgres:15
@@ -52,7 +50,7 @@ services:
 
   celery:
     build: .
-    image: habit-tracker-web
+    image: habit-tracker-celery
     container_name: habit_tracker_celery
     command: celery -A config worker -l info --pool=solo
     env_file:
@@ -67,7 +65,7 @@ services:
 
   celery-beat:
     build: .
-    image: habit-tracker-web
+    image: habit-tracker-celery-beat
     container_name: habit_tracker_celery_beat
     command: celery -A config beat -l info
     env_file:
